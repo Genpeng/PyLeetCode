@@ -34,13 +34,13 @@ class Solution1:
         """
         dummy_head = ListNode(-1)
         dummy_head.next = head
-        curr = dummy_head
-        while curr.next and curr.next.next:
-            first, second = curr.next, curr.next.next
+        prev = dummy_head
+        while prev.next and prev.next.next:
+            first, second = prev.next, prev.next.next
             # swap two nodes
-            first.next, second.next, curr.next = second.next, first, second
+            first.next, second.next, prev.next = second.next, first, second
             # update to next iteration
-            curr = curr.next.next
+            prev = first
         return dummy_head.next
 
 
