@@ -90,6 +90,33 @@ class Solution1:
             curr = curr.next
         return dummy_head.next
 
+    def add_two_numbers_3(self, l1: ListNode, l2: ListNode) -> ListNode:
+        """
+        解法一：迭代
+        时间复杂度：O(max(m,n))，其中m和n分别表示两个链表的长度
+        空间复杂度：O(max(m,n))，返回的结果链表长度最大为max(m,n)+1
+
+        :param l1: ListNode, one of the linked list
+        :param l2: ListNode, the other linked list
+        :return: the result linked list which represents the sum of two 'numbers'
+        """
+        dummy_head = ListNode(-1)
+        p1, p2, prev = l1, l2, dummy_head
+        carry = 0
+        while p1 or p2:
+            sum = carry
+            sum += 0 if p1 is None else p1.val
+            sum += 0 if p2 is None else p2.val
+            prev.next = ListNode(sum % 10)
+            # update to next iteration
+            carry = sum // 10
+            p1 = p1 if p1 is None else p1.next
+            p2 = p2 if p2 is None else p2.next
+            prev = prev.next
+        if carry > 0:
+            prev.next = ListNode(carry)
+        return dummy_head.next
+
 
 class Solution2:
     def add_two_numbers(self, l1, l2):

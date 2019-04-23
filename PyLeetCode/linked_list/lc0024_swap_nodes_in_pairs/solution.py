@@ -36,11 +36,11 @@ class Solution1:
         dummy_head.next = head
         prev = dummy_head
         while prev.next and prev.next.next:
-            first, second = prev.next, prev.next.next
+            p1, p2 = prev.next, prev.next.next
             # swap two nodes
-            first.next, second.next, prev.next = second.next, first, second
+            p1.next, p2.next, prev.next = p2.next, p1, p2
             # update to next iteration
-            prev = first
+            prev = p1
         return dummy_head.next
 
 
