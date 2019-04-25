@@ -45,22 +45,24 @@ Date:   2019/04/09
 class Solution:
     def is_valid(self, s):
         if s is None:
-            raise Exception("[ERROR] The input String is None!!!")
-        s = []
+            raise Exception("[ERROR] The input string is None!!!")
+        stack = []
         for c in s:
             if c == '(':
-                s.append(')')
+                stack.append(')')
             elif c == '[':
-                s.append(']')
+                stack.append(']')
             elif c == '{':
-                s.append('}')
-            elif len(s) == 0 or c != s.pop():
+                stack.append('}')
+            elif stack and c == stack[-1]:
+                stack.pop()
+            else:
                 return False
-        return not s
+        return not stack
 
 
 def main():
-    print((Solution()).is_valid(''))
+    print((Solution()).is_valid("(((()))"))
     # print((Solution()).is_valid(None))
 
 
