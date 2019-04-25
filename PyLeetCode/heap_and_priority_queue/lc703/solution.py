@@ -37,6 +37,8 @@ import heapq
 
 class KthLargest:
     def __init__(self, k, nums):
+        if k > len(nums) - 1:
+            raise Exception("[ERROR] The size of priority queue is less than k-1!!!")
         self._pool = nums
         self._k = k
         heapq.heapify(self._pool)
