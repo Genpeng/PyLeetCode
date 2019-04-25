@@ -37,8 +37,9 @@ import heapq
 
 class KthLargest:
     def __init__(self, k, nums):
-        if k > len(nums) - 1:
-            raise Exception("[ERROR] The size of priority queue is less than k-1!!!")
+        if nums is None or len(nums) < k - 1:
+            raise Exception("[ERROR] The input array is None, or the size of priority queue is less than k-1!!!")
+
         self._pool = nums
         self._k = k
         heapq.heapify(self._pool)
@@ -46,6 +47,26 @@ class KthLargest:
             heapq.heappop(self._pool)
 
     def add(self, val):
+        if len(self._pool) < self._k:
+            heapq.heappush(self._pool, val)
+        elif val > self._pool[0]:  # len(self._pool) == k
+            heapq.heapreplace(self._pool, val)
+        return self._pool[0]
+
+
+class KthLargest2:
+    def __init__(self, k: int, nums: list[int]):
+        if nums is None or len(nums) < k - 1:
+            raise Exception("[ERROR] The input array is None, or the size of array is less than k-1!!!")
+
+        self._k = k
+        self._pool = nums[:k - 1]  # 首先存储k-1个元素
+
+        heapq.heapify(self._pool)
+        for num in nums[k - 1:]:
+            self.add(num)
+
+    def add(self, val: int) -> int:
         if len(self._pool) < self._k:
             heapq.heappush(self._pool, val)
         elif val > self._pool[0]:
