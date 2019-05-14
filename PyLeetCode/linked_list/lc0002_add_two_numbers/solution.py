@@ -104,17 +104,46 @@ class Solution1:
         p1, p2, prev = l1, l2, dummy_head
         carry = 0
         while p1 or p2:
-            sum = carry
-            sum += 0 if p1 is None else p1.val
-            sum += 0 if p2 is None else p2.val
-            prev.next = ListNode(sum % 10)
+            s = carry
+            s += 0 if p1 is None else p1.val
+            s += 0 if p2 is None else p2.val
+            prev.next = ListNode(s % 10)
             # update to next iteration
-            carry = sum // 10
+            carry = s // 10
             p1 = p1 if p1 is None else p1.next
             p2 = p2 if p2 is None else p2.next
             prev = prev.next
         if carry > 0:
             prev.next = ListNode(carry)
+        return dummy_head.next
+
+    def add_two_numbers_4(self, l1: ListNode, l2: ListNode) -> ListNode:
+        """
+        解法一：迭代
+        时间复杂度：O(max(m,n))，其中m和n分别表示两个链表的长度
+        空间复杂度：O(max(m,n))，返回的结果链表长度最大为max(m,n)+1
+
+        :param l1: ListNode, one of the linked list
+        :param l2: ListNode, the other linked list
+        :return: the result linked list which represents the sum of two 'numbers'
+        """
+        if not l1 or not l2:
+            return l1 or l2
+        dummy_head = ListNode(-1)
+        curr, p1, p2 = dummy_head, l1, l2
+        carry = 0
+        while p1 or p2:
+            s = carry
+            s += 0 if not p1 else p1.val
+            s += 0 if not p2 else p2.val
+            carry = s // 10
+            curr.next = ListNode(s % 10)
+            # update to next iteration
+            p1 = p1 if not p1 else p1.next
+            p2 = p2 if not p2 else p2.next
+            curr = curr.next
+        if carry > 0:
+            curr.next = ListNode(carry)
         return dummy_head.next
 
 
