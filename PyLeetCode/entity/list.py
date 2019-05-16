@@ -1,7 +1,7 @@
 # _*_ coding: utf-8 _*_
 
 """
-Some Linked List classes.
+Some useful utilities about linked list.
 
 Author: Genpeng Xu
 Date:   2019/03/20
