@@ -31,7 +31,7 @@ class Solution:
     def remove_nth_from_end(self, head: ListNode, n: int) -> ListNode:
         p1, p2 = head, head
         # p2指针移动n个节点，使得p1和p2之间的距离为n+1
-        for i in range(n):
+        for _ in range(n):
             p2 = p2.next
         # 如果p2指针为空，则说明链表的长度刚好为n，待删除的节点刚好为头结点
         if p2 is None:
