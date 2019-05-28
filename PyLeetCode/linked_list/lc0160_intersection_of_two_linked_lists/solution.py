@@ -43,14 +43,14 @@ class Solution1:
         :return: ListNode, the intersection node
         """
         nodes_has_seen = set()
-        p_a, p_b = head_a, head_b
-        while p_a:
-            nodes_has_seen.add(p_a)
-            p_a = p_a.next
-        while p_b:
-            if p_b in nodes_has_seen:
-                return p_b
-            p_b = p_b.next
+        pa, pb = head_a, head_b
+        while pa:
+            nodes_has_seen.add(pa)
+            pa = pa.next
+        while pb:
+            if pb in nodes_has_seen:
+                return pb
+            pb = pb.next
         return None
 
 
@@ -65,8 +65,8 @@ class Solution2:
         :param head_b: ListNode, the other head of the two linked list
         :return: ListNode, the intersection node
         """
-        p_a, p_b = head_a, head_b
-        while p_a != p_b:
-            p_a = p_a.next if p_a else head_b
-            p_b = p_b.next if p_b else head_a
-        return p_a
+        pa, pb = head_a, head_b
+        while pa != pb:
+            pa = pa.next if pa else head_b
+            pb = pb.next if pb else head_a
+        return pa
