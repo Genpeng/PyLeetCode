@@ -37,7 +37,7 @@ class Solution1:
         :param nums: list[int], input array
         :return: list[list[int]], all unique triplets in the array which gives the sum of zero
         """
-        if len(nums) < 3:
+        if not nums or len(nums) < 3:
             return []
         nums.sort()
         res = set()
@@ -47,9 +47,9 @@ class Solution1:
             s = set()
             for b in nums[i + 1:]:
                 if b not in s:
-                    s.add(-a - b)
+                    s.add(-a-b)
                 else:
-                    res.add((a, -a - b, b))
+                    res.add((a, -a-b, b))
         return list(map(list, res))
 
 
@@ -63,7 +63,7 @@ class Solution2:
         :param nums: list[int], input array
         :return: list[list[int]], all unique triplets in the array which gives the sum of zero
         """
-        if len(nums) < 3:
+        if not nums or len(nums) < 3:
             return []
         nums.sort()
         res = []
