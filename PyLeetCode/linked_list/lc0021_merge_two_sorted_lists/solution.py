@@ -34,16 +34,16 @@ class Solution1:
         :return: the merged linked list
         """
         dummy_head = ListNode(-1)
-        curr = dummy_head
+        prev = dummy_head
         while l1 and l2:
             if l1.val < l2.val:
-                curr.next = l1
+                prev.next = l1
                 l1 = l1.next
             else:
-                curr.next = l2
+                prev.next = l2
                 l2 = l2.next
-            curr = curr.next
-        curr.next = l1 or l2
+            prev = prev.next
+        prev.next = l1 or l2
         return dummy_head.next
 
 
