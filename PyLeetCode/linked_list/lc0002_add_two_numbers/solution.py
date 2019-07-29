@@ -27,97 +27,7 @@ from PyLeetCode.entity.list import *
 
 
 class Solution1:
-    def add_two_numbers_1(self, l1, l2):
-        """
-        解法一：迭代
-        时间复杂度：O(max(m,n))，其中m和n分别表示两个链表的长度
-        空间复杂度：O(max(m,n))，返回的结果链表长度最大为max(m,n)+1
-
-        :param l1: ListNode, one of the linked list
-        :param l2: ListNode, the other linked list
-        :return:
-        """
-        dummy_head = ListNode(-1)
-        curr = dummy_head
-
-        carry, p, q = 0, l1, l2
-        while p or q:
-            sum = carry
-            if p:
-                sum += p.val
-            if q:
-                sum += q.val
-
-            carry = sum // 10
-
-            curr.next = ListNode(sum % 10)
-            curr = curr.next
-
-            if p:
-                p = p.next
-            if q:
-                q = q.next
-
-        if carry > 0:
-            curr.next = ListNode(carry)
-
-        return dummy_head.next
-
-    def add_two_numbers_2(self, l1, l2):
-        """
-        解法一：迭代
-        时间复杂度：O(max(m,n))，其中m和n分别表示两个链表的长度
-        空间复杂度：O(max(m,n))，返回的结果链表长度最大为max(m,n)+1
-
-        :param l1: ListNode, one of the linked list
-        :param l2: ListNode, the other linked list
-        :return: the result linked list which represents the sum of two 'numbers'
-        """
-        dummy_head = ListNode(-1)
-        curr = dummy_head
-
-        p, q, carry = l1, l2, 0
-        while p or q or carry:
-            v1, v2 = 0, 0
-            if p:
-                v1 = p.val
-                p = p.next
-            if q:
-                v2 = q.val
-                q = q.next
-            carry, v = divmod(v1 + v2 + carry, 10)
-            curr.next = ListNode(v)
-            curr = curr.next
-        return dummy_head.next
-
-    def add_two_numbers_3(self, l1: ListNode, l2: ListNode) -> ListNode:
-        """
-        解法一：迭代
-        时间复杂度：O(max(m,n))，其中m和n分别表示两个链表的长度
-        空间复杂度：O(max(m,n))，返回的结果链表长度最大为max(m,n)+1
-
-        :param l1: ListNode, one of the linked list
-        :param l2: ListNode, the other linked list
-        :return: the result linked list which represents the sum of two 'numbers'
-        """
-        dummy_head = ListNode(-1)
-        p1, p2, prev = l1, l2, dummy_head
-        carry = 0
-        while p1 or p2:
-            s = carry
-            s += 0 if p1 is None else p1.val
-            s += 0 if p2 is None else p2.val
-            prev.next = ListNode(s % 10)
-            # update to next iteration
-            carry = s // 10
-            p1 = p1 if p1 is None else p1.next
-            p2 = p2 if p2 is None else p2.next
-            prev = prev.next
-        if carry > 0:
-            prev.next = ListNode(carry)
-        return dummy_head.next
-
-    def add_two_numbers_4(self, l1: ListNode, l2: ListNode) -> ListNode:
+    def add_two_numbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         """
         解法一：迭代
         时间复杂度：O(max(m,n))，其中m和n分别表示两个链表的长度
@@ -130,20 +40,20 @@ class Solution1:
         if not l1 or not l2:
             return l1 or l2
         dummy_head = ListNode(-1)
-        curr, p1, p2 = dummy_head, l1, l2
+        prev = dummy_head
         carry = 0
-        while p1 or p2:
+        while l1 or l2:
             s = carry
-            s += 0 if not p1 else p1.val
-            s += 0 if not p2 else p2.val
+            s += l1.val if l1 else 0
+            s += l2.val if l2 else 0
             carry = s // 10
-            curr.next = ListNode(s % 10)
+            prev.next = ListNode(s % 10)
             # update to next iteration
-            p1 = p1 if not p1 else p1.next
-            p2 = p2 if not p2 else p2.next
-            curr = curr.next
-        if carry > 0:
-            curr.next = ListNode(carry)
+            l1 = l1.next if l1 else l1
+            l2 = l2.next if l2 else l2
+            prev = prev.next
+        if carry:
+            prev.next = ListNode(carry)
         return dummy_head.next
 
 
@@ -162,6 +72,7 @@ class Solution2:
         return self._add_two_numbers(l1, l2, 0)
 
     def _add_two_numbers(self, l1, l2, carry):
+        # Recursive termination condition
         if not l1 and not l2:
             if carry > 0:
                 return ListNode(carry)
