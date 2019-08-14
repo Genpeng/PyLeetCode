@@ -34,16 +34,16 @@ class Solution1:
         :return: the merged linked list
         """
         dummy_head = ListNode(-1)
-        prev = dummy_head
+        tail = dummy_head
         while l1 and l2:
             if l1.val < l2.val:
-                prev.next = l1
+                tail.next = l1
                 l1 = l1.next
             else:
-                prev.next = l2
+                tail.next = l2
                 l2 = l2.next
-            prev = prev.next
-        prev.next = l1 or l2
+            tail = tail.next
+        tail.next = l1 or l2
         return dummy_head.next
 
 
@@ -60,7 +60,6 @@ class Solution2:
         """
         if not l1 or not l2:
             return l1 or l2
-
         if l1.val < l2.val:
             l1.next = self.merge_two_lists(l1.next, l2)
             return l1
