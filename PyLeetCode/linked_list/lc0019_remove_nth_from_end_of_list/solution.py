@@ -30,20 +30,17 @@ from PyLeetCode.entity.list import *
 class Solution:
     def remove_nth_from_end(self, head: ListNode, n: int) -> ListNode:
         p1, p2 = head, head
-        # p2指针移动n个节点，使得p1和p2之间的距离为n+1
+        # Step 1: move `p2` n times, so that the distance between `p1` and `p2` is n+1
         for _ in range(n):
             p2 = p2.next
-        # 如果p2指针为空，则说明链表的长度刚好为n，待删除的节点刚好为头结点
-        if p2 is None:
+        if not p2:
             return head.next
-        # 如果p2不为空，同时移动两个节点，使得p2刚好位于尾节点
-        while p2:
-            p1 = p1.next
-            p2 = p2.next
-        # 删除倒数第n个节点
-        delete_node = p1.next
-        p1.next = delete_node.next
-        delete_node.next = None
+        # Step 2: move `p1` and `p2` simultaneously until `p2.next` is null pointer,
+        # this time `p1` is the n+1 node from the end of list
+        while p2.next:
+            p1, p2 = p1.next, p2.next
+        # Step 3: delete n node from the end of list
+        p1.next = p1.next.next
         return head
 
 
