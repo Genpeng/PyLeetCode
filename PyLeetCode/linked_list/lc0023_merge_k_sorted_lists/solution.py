@@ -23,13 +23,15 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/07/04
 """
 
+import sys
 import heapq
+from typing import List
 from queue import PriorityQueue
 from PyLeetCode.entity.list import *
 
 
 class Solution1:
-    def merge_k_lists(self, lists):
+    def merge_k_lists(self, lists: List[ListNode]) -> ListNode:
         """
         解法一：Brute Force
         时间复杂度：O(N * log(N))
@@ -46,15 +48,15 @@ class Solution1:
                 vals.append(l.val)
                 l = l.next
         dummy_head = ListNode(-1)
-        prev = dummy_head
+        tail = dummy_head
         for val in sorted(vals):
-            prev.next = ListNode(val)
-            prev = prev.next
+            tail.next = ListNode(val)
+            tail = tail.next
         return dummy_head.next
 
 
 class Solution2:
-    def merge_k_lists(self, lists):
+    def merge_k_lists(self, lists: List[ListNode]) -> ListNode:
         """
         解法二：k指针（双指针的扩展版），即每次将值最小的节点加到结果链表中
         时间复杂度：O(N * k)
@@ -66,22 +68,23 @@ class Solution2:
         if not lists:
             return None
         dummy_head = ListNode(-1)
-        prev = dummy_head
+        tail = dummy_head
         while True:
-            min_index, min_node = 0, ListNode(float('inf'))
-            for i, l in enumerate(lists):
-                if l and l.val < min_node.val:
-                    min_index, min_node = i, l
-            if min_node.val == float('inf'):
+            min_index, min_node = -1, ListNode(sys.maxsize)  # or `min_node = ListNode(float('inf'))`
+            for i, node in enumerate(lists):
+                if node and node.val < min_node.val:
+                    min_index, min_node = i, node
+            if min_index == -1:
                 break
-            prev.next = min_node
-            prev = prev.next
+            tail.next = min_node
+            # update to next iteration
+            tail = tail.next
             lists[min_index] = min_node.next
         return dummy_head.next
 
 
 class Solution3:
-    def merge_k_lists(self, lists):
+    def merge_k_lists(self, lists: List[ListNode]) -> ListNode:
         """
         解法三：在解法二的基础上，采用优先队列进行优化
         时间复杂度：O(N * log(k))
@@ -102,17 +105,18 @@ class Solution3:
             if l:
                 q.put((l.val, i))
         dummy_head = ListNode(-1)
-        prev = dummy_head
+        tail = dummy_head
         while not q.empty():
             min_index = q.get()[1]  # Time complexity: O(k)
-            prev.next = lists[min_index]
-            prev = prev.next
-            lists[min_index] = prev.next  # update the head of the minimum list
-            if prev.next:
-                q.put((prev.next.val, min_index))
+            tail.next = lists[min_index]
+            tail = tail.next
+            next_node = tail.next
+            lists[min_index] = next_node  # update the head of the minimum list
+            if next_node:
+                q.put((next_node.val, min_index))
         return dummy_head.next
 
-    def merge_k_lists_v2(self, lists):
+    def merge_k_lists_v2(self, lists: List[ListNode]) -> ListNode:
         """
         解法三：在解法二的基础上，采用优先队列进行优化（推荐）
         时间复杂度：O(N * log(k))
@@ -129,24 +133,25 @@ class Solution3:
         if not lists:
             return None
         pq = []
-        for i, l in enumerate(lists):
-            if l:
-                pq.append((l.val, i))
+        for i, node in enumerate(lists):
+            if node:
+                pq.append((node.val, i))
         heapq.heapify(pq)  # Time complexity: O(k)
         dummy_head = ListNode(-1)
-        prev = dummy_head
+        tail = dummy_head
         while pq:
             min_index = heapq.heappop(pq)[1]
-            prev.next = lists[min_index]
-            prev = prev.next
-            lists[min_index] = prev.next
-            if prev.next:
-                heapq.heappush(pq, (prev.next.val, min_index))
+            tail.next = lists[min_index]
+            tail = tail.next
+            next_node = tail.next
+            lists[min_index] = next_node
+            if next_node:
+                heapq.heappush(pq, (next_node.val, min_index))
         return dummy_head.next
 
 
 class Solution4:
-    def merge_k_lists(self, lists):
+    def merge_k_lists(self, lists: List[ListNode]) -> ListNode:
         """
         解法四：将问题分解成为合并两个链表（k-1次）
         时间复杂度：O(N * k)
@@ -178,7 +183,7 @@ class Solution4:
 
 
 class Solution5:
-    def merge_k_lists(self, lists):
+    def merge_k_lists(self, lists: List[ListNode]) -> ListNode:
         """
         解法五：Divide & Conquer, Top down
         时间复杂度：O(N * log(k))
@@ -265,5 +270,5 @@ if __name__ == '__main__':
     head2 = generate_linked_list([1, 3, 4])
     head3 = generate_linked_list([2, 6])
     lists = [head1, head2, head3]
-    solution = Solution5()
+    solution = Solution2()
     print(solution.merge_k_lists(lists))
