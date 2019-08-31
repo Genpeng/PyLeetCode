@@ -40,20 +40,20 @@ class Solution1:
         if not l1 or not l2:
             return l1 or l2
         dummy_head = ListNode(-1)
-        prev = dummy_head
+        tail = dummy_head
         carry = 0
         while l1 or l2:
             s = carry
             s += l1.val if l1 else 0
             s += l2.val if l2 else 0
-            carry = s // 10
-            prev.next = ListNode(s % 10)
+            tail.next = ListNode(s % 10)
             # update to next iteration
+            tail = tail.next
+            carry = s // 10
             l1 = l1.next if l1 else l1
             l2 = l2.next if l2 else l2
-            prev = prev.next
         if carry:
-            prev.next = ListNode(carry)
+            tail.next = ListNode(carry)
         return dummy_head.next
 
 
