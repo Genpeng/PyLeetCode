@@ -72,22 +72,16 @@ class Solution2:
         return self._add_two_numbers(l1, l2, 0)
 
     def _add_two_numbers(self, l1, l2, carry):
-        # Recursive termination condition
+        # Recursion termination condition
         if not l1 and not l2:
-            if carry > 0:
-                return ListNode(carry)
-            else:
-                return None
-
-        s = carry
-        l1_next, l2_next = None, None
+            return ListNode(carry) if carry else None
+        s, l1_next, l2_next = carry, None, None
         if l1:
             s += l1.val
             l1_next = l1.next
         if l2:
             s += l2.val
             l2_next = l2.next
-
         curr = ListNode(s % 10)
         curr.next = self._add_two_numbers(l1_next, l2_next, s // 10)
         return curr
