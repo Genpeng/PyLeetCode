@@ -40,8 +40,6 @@ class Solution1:
         :param lists: list[ListNode], k sorted linked lists
         :return: a new sorted linked list
         """
-        if not lists:
-            return None
         vals = []
         for l in lists:
             while l:
@@ -65,8 +63,6 @@ class Solution2:
         :param lists: list[ListNode], k sorted linked lists
         :return: a new sorted linked list
         """
-        if not lists:
-            return None
         dummy_head = ListNode(-1)
         tail = dummy_head
         while True:
@@ -98,8 +94,6 @@ class Solution3:
         :param lists: list[ListNode], k sorted linked lists
         :return: a new sorted linked list
         """
-        if not lists:
-            return None
         q = PriorityQueue()
         for i, l in enumerate(lists):  # Time complexity: k * log(k)
             if l:
@@ -107,7 +101,7 @@ class Solution3:
         dummy_head = ListNode(-1)
         tail = dummy_head
         while not q.empty():
-            min_index = q.get()[1]  # Time complexity: O(k)
+            min_index = q.get()[1]  # Time complexity: O(log(k))
             tail.next = lists[min_index]
             tail = tail.next
             next_node = tail.next
@@ -130,8 +124,6 @@ class Solution3:
         :param lists: list[ListNode], k sorted linked lists
         :return: a new sorted linked list
         """
-        if not lists:
-            return None
         pq = []
         for i, node in enumerate(lists):
             if node:
@@ -160,8 +152,6 @@ class Solution4:
         :param lists: list[ListNode], k sorted linked lists
         :return: a new sorted linked list
         """
-        if not lists:
-            return None
         head = lists[0]
         for head2 in lists[1:]:
             head = self._merge_two_lists(head, head2)
