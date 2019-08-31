@@ -47,8 +47,8 @@ class Solution1:
             s += l1.val if l1 else 0
             s += l2.val if l2 else 0
             tail.next = ListNode(s % 10)
-            # update to next iteration
             tail = tail.next
+            # update to next iteration
             carry = s // 10
             l1 = l1.next if l1 else l1
             l2 = l2.next if l2 else l2
