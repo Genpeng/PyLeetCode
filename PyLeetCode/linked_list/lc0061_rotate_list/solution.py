@@ -35,49 +35,43 @@ from PyLeetCode.entity.list import *
 
 class Solution:
     def rotate_right(self, head: ListNode, k: int) -> ListNode:
-        if not head:
+        if not head or not head.next or k == 0:
             return head
-
         # 求出链表的长度
-        length, curr = 1, head
-        while curr.next:
+        n, curr = 0, head
+        while curr:
+            n += 1
             curr = curr.next
-            length += 1
-
         # 求出实际右移的次数
-        k %= length
+        k %= n
         if k == 0:
             return head
-
         # 求出倒数第k+1个节点
         p1, p2 = head, head
-        for i in range(k):
+        for _ in range(k):  # the range of k is: [1, n-1]
             p2 = p2.next
         while p2.next:
             p1 = p1.next
             p2 = p2.next
-
         # “右移”链表
         new_head = p1.next
         p1.next, p2.next = None, head
         return new_head
 
     def rotate_right_v2(self, head: ListNode, k: int) -> ListNode:
-        if not head or not head.next:
-            return head
         # 求出链表长度
-        l, curr = 0, head
+        n, curr = 0, head
         while curr:
-            l += 1
+            n += 1
             curr = curr.next
         # 求出实际需要翻转的次数k
-        k = k % l
-        if k == 0:
-            return head
+        k = k % n  # the range of k is: [0, k-1]
         # 翻转链表
         return self.rotate_nth_from_end(head, k)
 
     def rotate_nth_from_end(self, head: ListNode, k: int) -> ListNode:
+        if not head or not head.next or k == 0:
+            return head
         p1, p2 = head, head
         for _ in range(k):
             p2 = p2.next
