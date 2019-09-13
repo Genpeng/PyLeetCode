@@ -24,10 +24,10 @@ class ListNode:
 
 def generate_linked_list(nums):
     dummy_head = ListNode(-1)
-    prev = dummy_head
+    tail = dummy_head
     for num in nums:
-        prev.next = ListNode(num)
-        prev = prev.next
+        tail.next = ListNode(num)
+        tail = tail.next
     return dummy_head.next
 
 
