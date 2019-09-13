@@ -132,7 +132,7 @@ class Solution3:
         dummy_head = ListNode(-1)
         tail = dummy_head
         while pq:
-            min_index = heapq.heappop(pq)[1]
+            _, min_index = heapq.heappop(pq)
             tail.next = lists[min_index]
             tail = tail.next
             next_node = tail.next
