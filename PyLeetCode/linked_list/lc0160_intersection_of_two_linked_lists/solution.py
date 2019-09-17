@@ -30,43 +30,46 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/04/01
 """
 
+from typing import Optional
+from PyLeetCode.entity.list import *
+
 
 class Solution1:
-    def get_intersection_node(self, head_a, head_b):
+    def get_intersection_node(self, head1: Optional[ListNode], head2: Optional[ListNode]) -> Optional[ListNode]:
         """
         解法一：哈希表
         时间复杂度：O(m + n)，其中m和n分别表示两个链表的长度
         空间复杂度：O(m) or O(n)
 
-        :param head_a: ListNode, the head of one of the two linked list
-        :param head_b: ListNode, the other head of the two linked list
+        :param head1: ListNode, the head of one of the two linked list
+        :param head2: ListNode, the other head of the two linked list
         :return: ListNode, the intersection node
         """
         nodes_has_seen = set()
-        pa, pb = head_a, head_b
-        while pa:
-            nodes_has_seen.add(pa)
-            pa = pa.next
-        while pb:
-            if pb in nodes_has_seen:
-                return pb
-            pb = pb.next
+        p1, p2 = head1, head2
+        while p1:
+            nodes_has_seen.add(p1)
+            p1 = p1.next
+        while p2:
+            if p2 in nodes_has_seen:
+                return p2
+            p2 = p2.next
         return None
 
 
 class Solution2:
-    def get_intersection_node(self, head_a, head_b):
+    def get_intersection_node(self, head1, head2):
         """
         解法二：双指针
         时间复杂度：O(L1 + L2 + L3)，具体分析见：https://blog.csdn.net/x273591655/article/details/83409873
         空间复杂度：O(1)
 
-        :param head_a: ListNode, the head of one of the two linked list
-        :param head_b: ListNode, the other head of the two linked list
+        :param head1: ListNode, the head of one of the two linked list
+        :param head2: ListNode, the other head of the two linked list
         :return: ListNode, the intersection node
         """
-        pa, pb = head_a, head_b
-        while pa != pb:
-            pa = pa.next if pa else head_b
-            pb = pb.next if pb else head_a
-        return pa
+        p1, p2 = head1, head2
+        while p1 != p2:
+            p1 = p1.next if p1 else head2
+            p2 = p2.next if p2 else head1
+        return p1
