@@ -1,19 +1,28 @@
 # _*_ coding: utf-8 _*_
 
 """
-This is the solution of no. xxx problem in the LeetCode,
+This is the solution of no. 148 problem in the LeetCode,
 where the website of the problem is as follow:
-xxx
+https://leetcode.com/problems/sort-list/
 
 The description of problem is as follow:
 ==========================================================================================================
-xxx
+Sort a linked list in O(n log n) time using constant space complexity.
+
+Example 1:
+Input: 4->2->1->3
+Output: 1->2->3->4
+
+Example 2:
+Input: -1->5->3->4->0
+Output: -1->0->3->4->5
 ==========================================================================================================
 
 Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/06/30
 """
 
+from typing import Tuple, Optional
 from PyLeetCode.entity.list import *
 
 
@@ -68,18 +77,22 @@ class Solution2:
         # Recursion termination condition
         if not head or not head.next:
             return head
-        # Find the middle position (the node `slow` point to)
+        # split the long linked list into two short list
+        head, head2 = self.split_list(head)
+        # Split the linked list into two halves
+        l1 = self.sort_list(head)
+        l2 = self.sort_list(head2)
+        # Merge two sorted list into a list
+        return self.merge_two_lists(l1, l2)
+
+    def split_list(self, head: ListNode) -> Tuple[ListNode, ListNode]:
         prev, slow, fast = None, head, head
         while fast and fast.next:
             prev, slow, fast = slow, slow.next, fast.next.next
         prev.next = None
-        # Split the linked list into two halves
-        l1 = self.sort_list(head)
-        l2 = self.sort_list(slow)
-        # Merge two sorted list into a list
-        return self._merge(l1, l2)
+        return head, slow
 
-    def _merge(self, l1: ListNode, l2: ListNode) -> ListNode:
+    def merge_two_lists(self, l1: ListNode, l2: ListNode) -> ListNode:
         dummy_head = ListNode(-1)
         prev = dummy_head
         while l1 and l2:
@@ -95,7 +108,7 @@ class Solution2:
 
 
 class Solution3:
-    def sort_list(self, head: ListNode) -> ListNode:
+    def sort_list(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
         解法三：归并排序（Bottom up）
         时间复杂度：O(n * log(n))
@@ -109,74 +122,54 @@ class Solution3:
         ------
         ListNode, the head of the sorted list
         """
-        # Recursion termination condition
         if not head or not head.next:
             return head
         # Count the length of linked list
-        len, curr = 0, head
+        n, curr = 0, head
         while curr:
-            len, curr = len + 1, curr.next
+            n, curr = n + 1, curr.next
         # Split the linked list into sublist with different length, and merge them
         dummy_head = ListNode(-1)
         dummy_head.next = head
-        n = 1
-        while n < len:
-            curr = dummy_head.next
-            tail = dummy_head
+        i = 1
+        while i < n:
+            tail, curr = dummy_head, dummy_head.next
             while curr:
                 l = curr
-                r = self._split(l, n)
-                curr = self._split(r, n)
+                r = self._split(l, i)
+                curr = self._split(r, i)
                 pair = self._merge(l, r)
                 tail.next = pair[0]
                 tail = pair[1]
-            n <<= 1
+            i <<= 1
         return dummy_head.next
 
-    def _split(self, head: ListNode, n: int) -> ListNode:
+    def _split(self, head: ListNode, n: int) -> Optional[ListNode]:
         while n > 1 and head:
             n, head = n - 1, head.next
-        rest = head.next if head else head
+        rest = head.next if head else None
         if head:
             head.next = None
         return rest
 
-    def _merge(self, l1: ListNode, l2: ListNode) -> tuple:
+    def _merge(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Tuple[ListNode, ListNode]:
         dummy_head = ListNode(-1)
-        prev = dummy_head
+        tail = dummy_head
         while l1 and l2:
             if l1.val < l2.val:
-                prev.next = l1
+                tail.next = l1
                 l1 = l1.next
             else:
-                prev.next = l2
+                tail.next = l2
                 l2 = l2.next
-            prev = prev.next
-        prev.next = l1 or l2
-        while prev.next:
-            prev = prev.next
-        return dummy_head.next, prev
+            tail = tail.next
+        tail.next = l1 or l2
+        while tail.next:
+            tail = tail.next
+        return dummy_head.next, tail
 
 
 if __name__ == '__main__':
-    # test `_split` method
-    # head = generate_linked_list([4, 2, 1, 3])
-    # print(head)
-    # solution = Solution3()
-    # head2 = solution._split(head, 2)
-    # print(head)
-    # print(head2)
-
-    # test `_merge` method
-    # l1 = generate_linked_list([1, 2, 3, 4])
-    # l2 = generate_linked_list([5, 6, 7, 8])
-    # print(l1)
-    # print(l2)
-    # solution = Solution3()
-    # head, tail = solution._merge(l1, l2)
-    # print(head)
-    # print(tail)
-
     # test `sort_list` method
     head = generate_linked_list([4, 2, 1, 3])
     print(head)
