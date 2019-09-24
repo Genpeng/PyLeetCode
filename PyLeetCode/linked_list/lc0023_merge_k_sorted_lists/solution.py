@@ -25,8 +25,8 @@ Date:   2019/07/04
 
 import sys
 import heapq
-from typing import List
 from queue import PriorityQueue
+from typing import List, Optional
 from PyLeetCode.entity.list import *
 
 
@@ -173,7 +173,7 @@ class Solution4:
 
 
 class Solution5:
-    def merge_k_lists(self, lists: List[ListNode]) -> ListNode:
+    def merge_k_lists(self, lists: Optional[List[Optional[ListNode]]]) -> Optional[ListNode]:
         """
         解法五：Divide & Conquer, Top down
         时间复杂度：O(N * log(k))
@@ -186,7 +186,7 @@ class Solution5:
             return None
         return self._merge_k_lists(lists, 0, len(lists) - 1)
 
-    def _merge_k_lists(self, lists, si, ei):
+    def _merge_k_lists(self, lists: List[Optional[ListNode]], si: int, ei: int) -> Optional[ListNode]:
         """
         Merge k lists where the start index is `si`, and the end index is `ei`.
 
@@ -202,7 +202,7 @@ class Solution5:
         l2 = self._merge_k_lists(lists, mi + 1, ei)
         return self._merge_two_lists(l1, l2)
 
-    def _merge_two_lists(self, l1: ListNode, l2: ListNode) -> ListNode:
+    def _merge_two_lists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         dummy_head = ListNode(-1)
         prev = dummy_head
         while l1 and l2:
@@ -218,7 +218,7 @@ class Solution5:
 
 
 class Solution6:
-    def merge_k_lists(self, lists):
+    def merge_k_lists(self, lists: Optional[List[Optional[ListNode]]]) -> Optional[ListNode]:
         """
         解法六：Divide & Conquer, Bottom up
         时间复杂度：O(N * log(k))
@@ -233,25 +233,25 @@ class Solution6:
         """
         if not lists:
             return None
-        interval = 1
-        while interval < len(lists):
-            for i in range(0, len(lists) - interval, interval * 2):
+        interval, n = 1, len(lists)
+        while interval < n:
+            for i in range(0, n - interval, interval * 2):
                 lists[i] = self._merge_two_lists(lists[i], lists[i + interval])
             interval *= 2
         return lists[0]
 
-    def _merge_two_lists(self, l1: ListNode, l2: ListNode) -> ListNode:
+    def _merge_two_lists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         dummy_head = ListNode(-1)
-        prev = dummy_head
+        tail = dummy_head
         while l1 and l2:
             if l1.val < l2.val:
-                prev.next = l1
+                tail.next = l1
                 l1 = l1.next
             else:
-                prev.next = l2
+                tail.next = l2
                 l2 = l2.next
-            prev = prev.next
-        prev.next = l1 or l2
+            tail = tail.next
+        tail.next = l1 or l2
         return dummy_head.next
 
 
