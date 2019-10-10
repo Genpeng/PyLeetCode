@@ -27,11 +27,12 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/05/16
 """
 
+from typing import Optional, List
 from PyLeetCode.entity.tree import *
 
 
 class Solution1:
-    def postorder_traversal(self, root: TreeNode) -> list:
+    def postorder_traversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         解法一：递归
         时间复杂度：O(n)
@@ -44,7 +45,7 @@ class Solution1:
         self._postorder_traversal(root, res)
         return res
 
-    def _postorder_traversal(self, root: TreeNode, res: list):
+    def _postorder_traversal(self, root: Optional[TreeNode], res: List[int]) -> None:
         if root is None:
             return
         self._postorder_traversal(root.left, res)
@@ -53,7 +54,7 @@ class Solution1:
 
 
 class Solution2:
-    def postorder_traversal(self, root: TreeNode) -> list:
+    def postorder_traversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         解法二：迭代
         时间复杂度：O(n)
