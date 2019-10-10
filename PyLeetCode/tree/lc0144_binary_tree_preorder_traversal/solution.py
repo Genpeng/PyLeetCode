@@ -27,11 +27,12 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/05/15
 """
 
+from typing import Optional, List
 from PyLeetCode.entity.tree import *
 
 
 class Solution1:
-    def preorder_traversal(self, root: TreeNode) -> list:
+    def preorder_traversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         解法一：递归
         时间复杂度：O(n)
@@ -44,7 +45,7 @@ class Solution1:
         self._preorder_traversal(root, res)
         return res
 
-    def _preorder_traversal(self, root: TreeNode, res: list):
+    def _preorder_traversal(self, root: Optional[TreeNode], res: List[int]) -> None:
         if root is None:
             return
         res.append(root.val)
@@ -53,7 +54,7 @@ class Solution1:
 
 
 class Solution2:
-    def preorder_traversal(self, root: TreeNode) -> list:
+    def preorder_traversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         解法二：迭代
         时间复杂度：O(n)
@@ -75,7 +76,7 @@ class Solution2:
                 stack.append(node.left)
         return res
 
-    def preorder_traversal_v2(self, root: TreeNode) -> list:
+    def preorder_traversal_v2(self, root: Optional[TreeNode]) -> List[int]:
         """
         解法二：迭代
         时间复杂度：O(n)
@@ -93,9 +94,9 @@ class Solution2:
                 stack.append(node.left)
         return res
 
-    def preorder_traversal_v3(self, root: TreeNode) -> list:
+    def preorder_traversal_v3(self, root: Optional[TreeNode]) -> List[int]:
         """
-        解法二：迭代
+        解法二：迭代（推荐）
         时间复杂度：O(n)
         空间复杂度：O(n)
 
