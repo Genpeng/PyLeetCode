@@ -27,11 +27,12 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/05/15
 """
 
+from typing import Optional, List
 from PyLeetCode.entity.tree import *
 
 
 class Solution1:
-    def inorder_traversal(self, root: TreeNode) -> list:
+    def inorder_traversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         解法一：递归
         时间复杂度：O(n)
@@ -44,7 +45,7 @@ class Solution1:
         self._inorder_traversal(root, res)
         return res
 
-    def _inorder_traversal(self, root: TreeNode, res: list):
+    def _inorder_traversal(self, root: Optional[TreeNode], res: List[int]) -> None:
         if root is None:
             return
         self._inorder_traversal(root.left, res)
@@ -53,7 +54,7 @@ class Solution1:
 
 
 class Solution2:
-    def inorder_traversal(self, root: TreeNode) -> list:
+    def inorder_traversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         解法二：迭代
         时间复杂度：O(n)
@@ -73,7 +74,7 @@ class Solution2:
             curr = curr.right
         return res
 
-    def inorder_traversal_v2(self, root: TreeNode) -> list:
+    def inorder_traversal_v2(self, root: Optional[TreeNode]) -> List[int]:
         """
         解法二：迭代（推荐）
         时间复杂度：O(n)
@@ -82,7 +83,8 @@ class Solution2:
         :param root: TreeNode, the root of binary tree
         :return: list, the inorder traversal of binary tree
         """
-        res, stack, curr = [], [], root
+        res = []
+        curr, stack = root, []
         while curr or stack:
             if curr:
                 stack.append(curr)
