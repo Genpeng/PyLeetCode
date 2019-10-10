@@ -29,10 +29,12 @@ Date:   2019/06/23
 """
 
 from collections import deque
+from typing import Optional, List
+from PyLeetCode.entity.tree import *
 
 
 class Solution1:
-    def level_order_1(self, root):
+    def level_order_v1(self, root: Optional[TreeNode]) -> List[List[int]]:
         """
         解法一：迭代（推荐）
         时间复杂度：O(n)
@@ -48,15 +50,15 @@ class Solution1:
             vals = []
             for _ in range(len(queue)):
                 node = queue.popleft()
+                vals.append(node.val)
                 if node.left:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
-                vals.append(node.val)
             res.append(vals)
         return res
 
-    def level_order_2(self, root):
+    def level_order_v2(self, root: Optional[TreeNode]) -> List[List[int]]:
         """
         解法一：迭代
         时间复杂度：O(n)
@@ -76,7 +78,7 @@ class Solution1:
             level = [leaf for leaf in tmp if leaf]
         return res
 
-    def level_order_3(self, root):
+    def level_order_v3(self, root: Optional[TreeNode]) -> List[List[int]]:
         """
         解法一：迭代
         时间复杂度：O(n)
@@ -93,7 +95,7 @@ class Solution1:
 
 
 class Solution2:
-    def level_order(self, root):
+    def level_order(self, root: Optional[TreeNode]) -> List[List[int]]:
         """
         解法二：递归
         时间复杂度：O(n)
@@ -106,7 +108,7 @@ class Solution2:
         self._level_order_helper(root, 0, res)
         return res
 
-    def _level_order_helper(self, root, depth, res):
+    def _level_order_helper(self, root: Optional[TreeNode], depth: int, res: List[List[int]]) -> None:
         if not root:
             return
         if depth >= len(res):
