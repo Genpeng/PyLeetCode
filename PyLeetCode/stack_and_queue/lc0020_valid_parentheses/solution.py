@@ -43,9 +43,7 @@ Date:   2019/04/09
 
 
 class Solution:
-    def is_valid(self, s):
-        if s is None:
-            raise Exception("[ERROR] The input string is None!!!")
+    def is_valid(self, s: str) -> bool:
         stack = []
         for c in s:
             if c == '(':
@@ -54,16 +52,13 @@ class Solution:
                 stack.append(']')
             elif c == '{':
                 stack.append('}')
-            elif stack and c == stack[-1]:
-                stack.pop()
-            else:
+            elif not stack or c != stack.pop():
                 return False
         return not stack
 
 
 def main():
-    print((Solution()).is_valid("(((()))"))
-    # print((Solution()).is_valid(None))
+    print((Solution()).is_valid("()()()"))
 
 
 if __name__ == '__main__':
