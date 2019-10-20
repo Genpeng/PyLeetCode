@@ -72,7 +72,7 @@ class Solution2:
         时间复杂度：O(n)
         空间复杂度：O(n)
 
-        :param root: the root of the binary tree
+        :param root: TreeNode, the root of the binary tree
         :return: the zigzag level order traversal of its nodes' values
         """
         res = []
