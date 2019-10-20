@@ -30,11 +30,95 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/05/20
 """
 
+from typing import Optional
+from collections import deque
 from PyLeetCode.entity.tree import *
 
 
-class Solution:
-    def max_depth(self, root: TreeNode) -> int:
+class Solution1:
+    def max_depth(self, root: Optional[TreeNode]) -> int:
+        """
+        解法一：递归
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        :param root: TreeNode, the root of the binary tree
+        :return: the maximum depth of the binary tree
+        """
         if not root:
             return 0
         return 1 + max(self.max_depth(root.left), self.max_depth(root.right))
+
+
+class Solution2:
+    def max_depth(self, root: Optional[TreeNode]) -> int:
+        """
+        解法二：迭代（DFS版本）
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        :param root: TreeNode, the root of the binary tree
+        :return: the maximum depth of the binary tree
+        """
+        if not root:
+            return 0
+        s1, s2, max_depth = [], [], 0
+        s1.append(root)
+        s2.append(1)
+        while s1:
+            node = s1.pop()
+            depth = s2.pop()
+            max_depth = max(max_depth, depth)
+            if node.left:
+                s1.append(node.left)
+                s2.append(depth + 1)
+            if node.right:
+                s1.append(node.right)
+                s2.append(depth + 1)
+        return max_depth
+
+    def max_depth_v2(self, root: Optional[TreeNode]) -> int:
+        """
+        解法二：迭代（DFS版本）
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        :param root: TreeNode, the root of the binary tree
+        :return: the maximum depth of the binary tree
+        """
+        if not root:
+            return 0
+        s, max_depth = [], 0
+        s.append((root, 1))
+        while s:
+            node, depth = s.pop()
+            max_depth = max(max_depth, depth)
+            if node.left:
+                s.append((node.left, depth + 1))
+            if node.right:
+                s.append((node.right, depth + 1))
+        return max_depth
+
+
+class Solution3:
+    def max_depth(self, root: Optional[TreeNode]) -> int:
+        """
+        解法二：迭代（BFS版本）
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        :param root: TreeNode, the root of the binary tree
+        :return: the maximum depth of the binary tree
+        """
+        if not root:
+            return 0
+        q, depth = deque([root]), 0
+        while q:
+            depth += 1
+            for _ in range(len(q)):
+                node = q.popleft()
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+        return depth
