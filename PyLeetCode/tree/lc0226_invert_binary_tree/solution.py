@@ -104,3 +104,19 @@ class Solution3:
                 if node.right:
                     q.append(node.right)
         return root
+
+    def invert_tree_v2(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        """
+        解法三：迭代（BFS）
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        :param root: TreeNode, the root of binary tree
+        :return: TreeNode, the root of inverted binary tree
+        """
+        if not root:
+            return root
+        d = deque([root])
+        while q:
+            node = q.popleft()
+
