@@ -37,11 +37,13 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/06/20
 """
 
+from collections import deque
+from typing import Optional
 from PyLeetCode.entity.tree import *
 
 
 class Solution1:
-    def invert_tree(self, root: TreeNode) -> TreeNode:
+    def invert_tree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         """
         解法一：递归
         时间复杂度：O(n)
@@ -57,7 +59,7 @@ class Solution1:
 
 
 class Solution2:
-    def invert_tree(self, root: TreeNode) -> TreeNode:
+    def invert_tree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         """
         解法二：迭代（DFS）
         时间复杂度：O(n)
@@ -78,4 +80,27 @@ class Solution2:
                 stack.append(node.right)
         return root
 
-# TODO: Iterative (BFS)
+
+class Solution3:
+    def invert_tree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        """
+        解法三：迭代（BFS）
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        :param root: TreeNode, the root of binary tree
+        :return: TreeNode, the root of inverted binary tree
+        """
+        if not root:
+            return root
+        q = deque([root])
+        while q:
+            for _ in range(len(q)):
+                node = q.popleft()
+                # swap left and right subtree
+                node.left, node.right = node.right, node.left
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+        return root
