@@ -99,6 +99,7 @@ class Solution3:
                 node = q.popleft()
                 # swap left and right subtree
                 node.left, node.right = node.right, node.left
+                # add nodes of the next level into queue
                 if node.left:
                     q.append(node.left)
                 if node.right:
@@ -116,7 +117,14 @@ class Solution3:
         """
         if not root:
             return root
-        d = deque([root])
+        q = deque([root])
         while q:
             node = q.popleft()
-
+            # swap left and right subtree
+            node.left, node.right = node.right, node.left
+            # add left and right child into queue
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        return root
