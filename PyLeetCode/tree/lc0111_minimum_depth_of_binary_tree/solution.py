@@ -104,3 +104,28 @@ class Solution2:
                 q.append((node.left, depth + 1))
             if node.right:
                 q.append((node.right, depth + 1))
+        return -1
+
+    def min_depth_v2(self, root: Optional[TreeNode]) -> int:
+        """
+        解法二：迭代（BFS版本）
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        :param root: TreeNode, the root of the binary tree
+        :return: the minimum depth of the binary tree
+        """
+        if not root:
+            return 0
+        q, depth = deque([root]), 0
+        while q:
+            depth += 1
+            for _ in range(len(q)):
+                node = q.popleft()
+                if not node.left and not node.right:
+                    return depth
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+        return -1
