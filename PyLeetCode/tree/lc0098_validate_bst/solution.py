@@ -40,9 +40,12 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/05/20
 """
 
+from typing import Optional, Union
+from PyLeetCode.entity.tree import *
+
 
 class Solution1:
-    def is_valid_bst(self, root):
+    def is_valid_bst(self, root: Optional[TreeNode]) -> bool:
         """
         解法一：递归
         时间复杂度：O(n)
@@ -53,17 +56,41 @@ class Solution1:
         """
         return self._is_valid_bst(root)
 
-    def _is_valid_bst(self, node, lower=float('-inf'), upper=float('inf')):
-        if not node:
+    def _is_valid_bst(self,
+                      root: Optional[TreeNode],
+                      lower: Union[int, float] = float('-inf'),
+                      upper: Union[int, float] = float('inf')) -> bool:
+        if not root:
             return True
-        val = node.val
+        val = root.val
         if val <= lower or val >= upper:
             return False
-        return self._is_valid_bst(node.left, lower, val) and self._is_valid_bst(node.right, val, upper)
+        return self._is_valid_bst(root.left, lower, val) and self._is_valid_bst(root.right, val, upper)
 
 
 class Solution2:
-    def is_valid_bst(self, root):
+    def is_valid_bst(self, root: Optional[TreeNode]) -> bool:
+        """
+        解法二：迭代
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        :param root: TreeNode, the root of BST
+        :return: bool, true if the BST is valid
+        """
+        stack = [(root, float('-inf'), float('inf'))]
+        while stack:
+            curr, lower, upper = stack.pop()
+            if not curr:
+                continue
+            val = curr.val
+            if val <= lower or val >= upper:
+                return False
+            stack.append((curr.right, val, upper))
+            stack.append((curr.left, lower, val))
+        return True
+
+    def is_valid_bst_v2(self, root: Optional[TreeNode]) -> bool:
         """
         解法二：迭代
         时间复杂度：O(n)
@@ -77,13 +104,13 @@ class Solution2:
         stack = [(root, float('-inf'), float('inf'))]
         while stack:
             curr, lower, upper = stack.pop()
-            if not curr:
-                continue
             val = curr.val
             if val <= lower or val >= upper:
                 return False
-            stack.append((curr.right, val, upper))
-            stack.append((curr.left, lower, val))
+            if curr.right:
+                stack.append((curr.right, val, upper))
+            if curr.left:
+                stack.append((curr.left, lower, val))
         return True
 
 
@@ -93,6 +120,9 @@ class Solution3:
         解法三：中序遍历
         时间复杂度：O(n)
         空间复杂度：O(n)
+
+        Runtime: 48 ms, faster than 92.06% of Python3 online submissions for Validate Binary Search Tree.
+        Memory Usage: 16 MB, less than 25.29% of Python3 online submissions for Validate Binary Search Tree.
 
         :param root: TreeNode, the root of BST
         :return: bool, true if the BST is valid
@@ -108,4 +138,29 @@ class Solution3:
                     return False
                 val = node.val
                 curr = node.right
+        return True
+
+    def is_valid_bst_v2(self, root):
+        """
+        解法三：中序遍历
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        Runtime: 48 ms, faster than 92.06% of Python3 online submissions for Validate Binary Search Tree.
+        Memory Usage: 16.1 MB, less than 24.14% of Python3 online submissions for Validate Binary Search Tree.
+
+        :param root: TreeNode, the root of BST
+        :return: bool, true if the BST is valid
+        """
+        stack, curr = [], root
+        val = float('-inf')
+        while curr or stack:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+            node = stack.pop()
+            if node.val <= val:
+                return False
+            val = node.val
+            curr = node.right
         return True
