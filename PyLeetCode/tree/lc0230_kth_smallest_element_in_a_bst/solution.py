@@ -103,6 +103,9 @@ class Solution2:
         时间复杂度：O(n)
         空间复杂度：O(n)
 
+        Runtime: 48 ms, faster than 98.91% of Python3 online submissions for Kth Smallest Element in a BST.
+        Memory Usage: 16.7 MB, less than 98.18% of Python3 online submissions for Kth Smallest Element in a BST.
+
         :param root: TreeNode, the root of BST
         :param k: int, an integer used to specify the element we want to fetch
         :return: int, the kth smallest element
