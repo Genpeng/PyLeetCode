@@ -51,7 +51,7 @@ class Solution1:
                                p: Optional[TreeNode],
                                q: Optional[TreeNode]) -> Optional[TreeNode]:
         """
-        解法一：递归（推荐）
+        解法一：递归
         时间复杂度：O(n)
         空间复杂度：O(n)
 
@@ -68,6 +68,49 @@ class Solution1:
             return root
         return left or right
 
+    # ========================================================================================= #
+    # 下面递归的另一种写法
+
+    def __init__(self):
+        self._lca = None
+
+    def lowest_common_ancestor_v2(self,
+                                  root: Optional[TreeNode],
+                                  p: Optional[TreeNode],
+                                  q: Optional[TreeNode]) -> Optional[TreeNode]:
+        """
+        解法一：递归
+        时间复杂度：O(n)
+        空间复杂度：O(n)
+
+        Runtime: 76 ms, faster than 94.13% of Python3 online submissions for Lowest Common Ancestor of a Binary Tree.
+        Memory Usage: 23 MB, less than 91.67% of Python3 online submissions for Lowest Common Ancestor of a Binary Tree.
+
+        :param root: TreeNode, the root of a binary tree
+        :param p: TreeNode, one node in the binary tree
+        :param q: TreeNode, other node in the binary tree
+        :return: TreeNode, the lowest common ancestor of two nodes
+        """
+        if not p or not q:
+            raise Exception("[ERROR] The input nodes must not be null!!!")
+        if not root:
+            return None
+        self._find_lca(root, p, q)
+        return self._lca
+
+    def _find_lca(self,
+                  root: Optional[TreeNode],
+                  p: Optional[TreeNode],
+                  q: Optional[TreeNode]) -> bool:
+        if not root:
+            return False
+        mid = 1 if root == p or root == q else 0
+        left = 1 if self._find_lca(root.left, p, q) else 0
+        right = 1 if self._find_lca(root.right, p, q) else 0
+        if mid + left + right >= 2:
+            self._lca = root
+        return mid + left + right > 0
+
 
 class Solution2:
     def lowest_common_ancestor(self,
@@ -79,26 +122,35 @@ class Solution2:
         时间复杂度：O(n)
         空间复杂度：O(n)
 
+        Runtime: 60 ms, faster than 99.98% of Python3 online submissions for Lowest Common Ancestor of a Binary Tree.
+        Memory Usage: 16.5 MB, less than 100.00% of Python3 online submissions for Lowest Common Ancestor of a Binary Tree.
+
         :param root: TreeNode, the root of a binary tree
         :param p: TreeNode, one node in the binary tree
         :param q: TreeNode, other node in the binary tree
         :return: TreeNode, the lowest common ancestor of two nodes
         """
-        nodes, stack = {root: None}, [root]
-        while p not in nodes or q not in nodes:
+        if not p or not q:
+            raise Exception("[ERROR] The input nodes must not be null!!!")
+        if not root:
+            return None
+        child_2_parent, stack = {root: None}, [root]
+        while stack:
             node = stack.pop()
             if node.right:
                 stack.append(node.right)
-                nodes[node.right] = node
+                child_2_parent[node.right] = node
             if node.left:
                 stack.append(node.left)
-                node[node.left] = node
+                child_2_parent[node.left] = node
+            if p in child_2_parent and q in child_2_parent:
+                break
         ancestors = set()
         while p:
             ancestors.add(p)
-            p = nodes[p]
-        while q not in ancestors:
-            q = nodes[q]
+            p = child_2_parent[p]
+        while q and q not in ancestors:
+            q = child_2_parent[q]
         return q
 
 
