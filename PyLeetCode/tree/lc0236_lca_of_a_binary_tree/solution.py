@@ -41,11 +41,15 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/06/11
 """
 
+from typing import Optional
 from PyLeetCode.entity.tree import *
 
 
 class Solution1:
-    def lowest_common_ancestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    def lowest_common_ancestor(self,
+                               root: Optional[TreeNode],
+                               p: Optional[TreeNode],
+                               q: Optional[TreeNode]) -> Optional[TreeNode]:
         """
         解法一：递归（推荐）
         时间复杂度：O(n)
@@ -56,18 +60,20 @@ class Solution1:
         :param q: TreeNode, other node in the binary tree
         :return: TreeNode, the lowest common ancestor of two nodes
         """
-        if root is None or root == p or root == q:
+        if not root or root == p or root == q:
             return root
         left = self.lowest_common_ancestor(root.left, p, q)
         right = self.lowest_common_ancestor(root.right, p, q)
         if left and right:
             return root
-        else:
-            return left or right
+        return left or right
 
 
 class Solution2:
-    def lowest_common_ancestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    def lowest_common_ancestor(self,
+                               root: Optional[TreeNode],
+                               p: Optional[TreeNode],
+                               q: Optional[TreeNode]) -> Optional[TreeNode]:
         """
         解法二：迭代（记录两个节点的路径）
         时间复杂度：O(n)
@@ -101,7 +107,10 @@ class Solution3:
     LEFT_DONE = 1
     BOTH_DONE = 0
 
-    def lowest_common_ancestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    def lowest_common_ancestor(self,
+                               root: Optional[TreeNode],
+                               p: Optional[TreeNode],
+                               q: Optional[TreeNode]) -> Optional[TreeNode]:
         """
         解法二：迭代（不推荐）
         时间复杂度：O(n)
