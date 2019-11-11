@@ -10,7 +10,6 @@ The description of problem is as follow:
 xxx
 ==========================================================================================================
 
-Author: StrongXGP (xgp1227@gmail.com)
-Date:   xxx
+Author: Genpeng Xu (xgp1227atgmail.com)
 """
 
