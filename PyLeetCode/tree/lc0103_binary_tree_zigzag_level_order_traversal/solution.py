@@ -41,6 +41,9 @@ class Solution1:
         时间复杂度：O(n)
         空间复杂度：O(n)
 
+        Runtime: 32 ms, faster than 85.41% of Python3 online submissions for Binary Tree Zigzag Level Order Traversal.
+        Memory Usage: 12.6 MB, less than 100.00% of Python3 online submissions for Binary Tree Zigzag Level Order Traversal.
+
         :param root: TreeNode, the root of the binary tree
         :return: the zigzag level order traversal of its nodes' values
         """
