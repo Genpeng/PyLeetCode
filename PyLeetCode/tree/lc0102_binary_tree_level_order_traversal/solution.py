@@ -40,23 +40,27 @@ class Solution1:
         时间复杂度：O(n)
         空间复杂度：O(n)
 
+        Runtime: 28 ms, faster than 97.23% of Python3 online submissions for Binary Tree Level Order Traversal.
+        Memory Usage: 13.1 MB, less than 100.00% of Python3 online submissions for Binary Tree Level Order Traversal.
+
         :param root: TreeNode, the root of a binary tree
         :return: list[list[int]], the level order traversal of its nodes' values
         """
         if not root:
             return []
-        res, queue = [], deque([root])
-        while queue:
+        ans = []
+        q = deque([root])
+        while q:
             vals = []
-            for _ in range(len(queue)):
-                node = queue.popleft()
+            for _ in range(len(q)):
+                node = q.popleft()
                 vals.append(node.val)
                 if node.left:
-                    queue.append(node.left)
+                    q.append(node.left)
                 if node.right:
-                    queue.append(node.right)
-            res.append(vals)
-        return res
+                    q.append(node.right)
+            ans.append(vals)
+        return ans
 
     def level_order_v2(self, root: Optional[TreeNode]) -> List[List[int]]:
         """
