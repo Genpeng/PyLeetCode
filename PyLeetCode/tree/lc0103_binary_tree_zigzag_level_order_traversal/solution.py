@@ -78,19 +78,19 @@ class Solution2:
         :param root: TreeNode, the root of the binary tree
         :return: the zigzag level order traversal of its nodes' values
         """
-        res = []
-        self._zigzag_level_order(root, 0, res)
-        return res
+        ans = []
+        self._zigzag_level_order(root, 0, ans)
+        return ans
 
-    def _zigzag_level_order(self, root: Optional[TreeNode], depth: int, res: List[List[int]]) -> None:
+    def _zigzag_level_order(self, root: Optional[TreeNode], depth: int, ans: List[List[int]]) -> None:
         if not root:
             return
-        if depth >= len(res):
-            res.append([])
-        vals = res[depth]
+        if depth >= len(ans):
+            ans.append([])
+        vals = ans[depth]
         if depth & 1 == 0:
             vals.append(root.val)
         else:
             vals.insert(0, root.val)
-        self._zigzag_level_order(root.left, depth + 1, res)
-        self._zigzag_level_order(root.right, depth + 1, res)
+        self._zigzag_level_order(root.left, depth + 1, ans)
+        self._zigzag_level_order(root.right, depth + 1, ans)
