@@ -25,22 +25,24 @@ Author: StrongXGP (xgp1227@gmail.com)
 Date:   2019/03/14
 """
 
+from typing import List
+
 
 class Solution1:
     """
-    解法：使用Map记录数字的次数
+    解法1：Hash Map
     时间复杂度：O(n)
     空间复杂度：O(n)
     """
-    def majority_element(self, nums):
-        threshold, counts = len(nums) // 2, dict()
+    def majority_element(self, nums: List[int]) -> int:
+        counts = {}
         for num in nums:
             counts[num] = counts.get(num, 0) + 1
-            if counts[num] > threshold:
+            if counts[num] > (len(nums) // 2):
                 return num
-        raise Exception("The majority element does not exist!!!")
+        raise Exception("[INFO] The input array is illegal!!!")
 
-    def majority_element_1(self, nums):
+    def majority_element_v2(self, nums: List[int]) -> int:
         threshold, counts = len(nums) // 2, dict()
         for num in nums:
             counts[num] = counts.get(num, 0) + 1
@@ -49,7 +51,7 @@ class Solution1:
 
 class Solution2:
     """
-    解法：对数组进行排序，取索引为⌊n/2⌋的数字
+    解法2：对数组进行排序，取索引为⌊n/2⌋的数字
     时间复杂度：O(n * logn)
     空间复杂度：O(n) or O(1), 取决于是否可以直接对数组进行排序
     """
@@ -59,7 +61,7 @@ class Solution2:
 
 class Solution3:
     """
-    解法：多数投票算法（Boyer-Moore majority vote algorithm）
+    解法3：多数投票算法（Boyer-Moore majority vote algorithm）
     时间复杂度：O(n)
     空间复杂度：O(1)
     """
