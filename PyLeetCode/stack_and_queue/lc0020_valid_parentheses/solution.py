@@ -43,12 +43,6 @@ Author: StrongXGP (xgp1227atgmail.com)
 
 class Solution:
     def is_valid(self, s: str) -> bool:
-        """
-
-
-        :param s:
-        :return:
-        """
         stack = []
         for c in s:
             if c == '(':
