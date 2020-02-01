@@ -13,14 +13,13 @@ that can be built with those letters.
 This is case sensitive, for example "Aa" is not considered a palindrome here.
 
 Note:
-Assume the length of given string will not exceed 1,010.
+- Assume the length of given string will not exceed 1,010.
 
 Example:
 Input:
 "abccccdd"
 Output:
 7
-
 Explanation:
 - One longest palindrome that can be built is "dccaccd", whose length is 7.
 ==========================================================================================================
@@ -49,7 +48,7 @@ class Solution:
         odds = sum(v & 1 for v in collections.Counter(s).values())
         return len(s) - odds + bool(odds)
 
-    def longest_palindrome_v1(self, s: str) -> int:
+    def longest_palindrome_v2(self, s: str) -> int:
         """
         ## 解法1 ##
         解题思路：
@@ -74,7 +73,7 @@ class Solution:
                 l += 2
         return l + 1 if l < len(s) else l
 
-    def longest_palindrome_v2(self, s: str) -> int:
+    def longest_palindrome_v3(self, s: str) -> int:
         """
         ## 解法1 ##
         解题思路：
@@ -98,7 +97,7 @@ class Solution:
                 l += 2
         return l + 1 if l < len(s) else l
 
-    def longest_palindrome_v3(self, s: str) -> int:
+    def longest_palindrome_v4(self, s: str) -> int:
         """
         ## 解法1 ##
         解题思路：
