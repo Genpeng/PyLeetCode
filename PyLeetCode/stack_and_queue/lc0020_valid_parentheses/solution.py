@@ -37,13 +37,18 @@ Input: "{[]}"
 Output: true
 ==========================================================================================================
 
-Author: StrongXGP (xgp1227@gmail.com)
-Date:   2019/04/09
+Author: StrongXGP (xgp1227atgmail.com)
 """
 
 
 class Solution:
     def is_valid(self, s: str) -> bool:
+        """
+
+
+        :param s:
+        :return:
+        """
         stack = []
         for c in s:
             if c == '(':
