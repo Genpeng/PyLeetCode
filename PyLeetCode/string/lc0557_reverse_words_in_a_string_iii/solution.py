@@ -24,9 +24,11 @@ Author: Genpeng Xu (xgp1227atgmail.com)
 class Solution:
     def reverse_words(self, s: str) -> str:
         """
-        # 解法一
+        # 解法1（写法1）
         解题思路：
-        split -> reverse -> join
+        Split the string into words, reverse each word, then join them back together.
+        时间复杂度：O(n)
+        空间复杂度：O(1)
 
         Arguments:
             s: str, the input string
@@ -34,10 +36,27 @@ class Solution:
         Return:
             str, the modified string
         """
-        return " ".join([x[::-1] for x in s.split()])  # list comprehension
+        # return " ".join(x[::-1] for x in s.split())  # generator expression
+        return " ".join([x[::-1] for x in s.split()])  # list comprehension expression (faster)
+
+    def reverse_words_v2(self, s: str) -> str:
+        """
+        # 解法1（写法2）
+        解题思路：
+        Split the string into words, reverse the order of the words, then reverse the entire string.
+        时间复杂度：O(n)
+        空间复杂度：O(1)
+
+        Arguments:
+            s: str, the input string
+
+        Return:
+            str, the modified string
+        """
+        return " ".join(s.split()[::-1])[::-1]
 
 
 if __name__ == "__main__":
     s = "Let's take LeetCode contest"
     solution = Solution()
-    assert "s'teL ekat edoCteeL tsetnoc" == solution.reverse_words(s)
+    assert "s'teL ekat edoCteeL tsetnoc" == solution.reverse_words_v2(s)
