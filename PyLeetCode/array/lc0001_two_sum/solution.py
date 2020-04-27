@@ -22,7 +22,7 @@ Date:   2019/03/09
 
 
 class Solution:
-    def twoSum(self, nums, target):
+    def two_sum(self, nums, target):
         if not nums or len(nums) == 1:
             raise Exception("[Error] The input array is illegal!")
 
@@ -38,4 +38,4 @@ class Solution:
 if __name__ == '__main__':
     nums = [2, 7, 11, 15]
     target = 9
-    print((Solution()).twoSum(nums, target))
+    print((Solution()).two_sum(nums, target))
