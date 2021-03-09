@@ -17,7 +17,10 @@ Follow up:
 A linked list can be reversed either iteratively or recursively. Could you implement both?
 ==========================================================================================================
 
-Author: StrongXGP (xgp1227@gmail.com)
+Difficulty: Easy
+Tags: linked list;
+
+Author: Genpeng Xu (xgp1227atgmail.com)
 Date:   2019/03/28
 """
 
@@ -31,8 +34,11 @@ class Solution1:
         时间复杂度：O(n)，其中n为链表的长度
         空间复杂度：O(1)
 
-        :param head: ListNode, the head of linked list
-        :return: ListNode, the head of the reversed order linked list
+        Args:
+            head: ListNode, the head of linked list
+
+        Returns:
+            ListNode, the head of the reversed order linked list
         """
         prev, curr = None, head
         while curr:
@@ -47,8 +53,11 @@ class Solution2:
         时间复杂度：O(n)，其中n为链表的长度
         空间复杂度：O(n)，额外的空间是由于递归占用系统栈空间，递归深度最多为n
 
-        :param head: ListNode, the head of linked list
-        :return: ListNode, the head of the reversed order linked list
+        Args:
+            head: ListNode, the head of linked list
+
+        Returns:
+            ListNode, the head of the reversed order linked list
         """
         if not head or not head.next:
             return head
@@ -57,11 +66,11 @@ class Solution2:
         return new_head
 
 
-def main():
+def test():
     head = generate_linked_list([1, 2, 3, 4, 5])
     print(head)
     print((Solution2()).reverse_list(head))
 
 
 if __name__ == '__main__':
-    main()
+    test()
