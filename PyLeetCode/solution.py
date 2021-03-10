@@ -10,6 +10,9 @@ The description of problem is as follow:
 xxx
 ==========================================================================================================
 
+Difficulty: Easy or Medium or Hard
+Tags: xxx
+
 Author: Genpeng Xu (xgp1227atgmail.com)
 """
 
